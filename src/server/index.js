@@ -1,0 +1,20 @@
+const express     = require("express")
+const cors        = require("cors")
+const routes      = require("./routes")
+                    require("dotenv").config()
+const app  = express()
+const port = process.env.NODE_PORT || 3000;
+
+
+
+function start(){
+    return app.use(cors())
+              .use(express.json())
+              .use("/quotes",routes)
+              .use((_req,res)=> res.status(404).json({success:false, error:"Route not found"}))
+              .listen(port, ()=>console.log(`server ready on port ${port}`))
+}
+
+module.exports = {
+    start
+}
